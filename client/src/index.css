@@ -11,6 +11,10 @@
         @apply w-9 h-9 stroke-current text-yellow-500 sm:w-10 sm:h-10
     }
 
+    .cardsContainer {
+        @apply flex flex-wrap justify-around mx-auto
+    }
+
     .cardContainer {
         @apply flex max-w-sm bg-white shadow-lg rounded-lg overflow-hidden m-4
     }
@@ -32,7 +36,7 @@
     }
 
     .tableData {
-        @apply px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-900 whitespace-nowrap
+        @apply px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-900 whitespace-nowrap text-center
     }
 
     .activePageTable {

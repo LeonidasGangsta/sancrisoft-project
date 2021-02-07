@@ -1,8 +1,17 @@
-import { LeftArrow, RightArrow } from "../Icons/Icons";
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteIcon, LeftArrow, RightArrow } from "../Icons/Icons";
+import { removeProduct } from "../actions";
 
 const MyCart = () => {
 
-    const columnsHeaders = ['Products', 'Category', 'Unit Price', 'Quantity', 'Total'];
+    const myCart = useSelector(state => state.myCart)
+    const dispatch = useDispatch();
+
+    const removeHandler = (id) => {
+        dispatch(removeProduct(id))
+    }
+
+    const columnsHeaders = ['Products', 'Category', 'Unit Price', 'Quantity', '', 'Total'];
 
     return (
         <div className="myCartContainer">
@@ -20,59 +29,70 @@ const MyCart = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="tableData">
-                                        <p>
-                                            Alexa Custom
-                                        </p>
-                                    </td>
-                                    <td className="tableData">
-                                        <p>
-                                            Amazon
-                                        </p>
-                                    </td>
-                                    <td className="tableData">
-                                        <p>
-                                            $200
-                                        </p>
-                                    </td>
-                                    <td className="tableData">
-                                        <input type="number" placeholder="2"/>
-                                    </td>
-                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden="true" className="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                {myCart.products.length ? myCart.products.map( ({product_name, product_category, product_price}, id) => 
+                                    <tr key={id}>
+                                        <td className="tableData">
+                                            <p>
+                                                {product_name}
+                                            </p>
+                                        </td>
+                                        <td className="tableData">
+                                            <p>
+                                                {product_category}
+                                            </p>
+                                        </td>
+                                        <td className="tableData">
+                                            <p>
+                                                {product_price}
+                                            </p>
+                                        </td>
+                                        <td className="tableData">
+                                            <p>
+                                                {myCart.quantity[id]}
+                                            </p>
+                                        </td>
+                                        <td className='w-5'>
+                                            <button onClick={() => removeHandler(id)}>
+                                                <DeleteIcon classNameProp='h-5 w-5'/>
+                                            </button>
+                                        </td>
+                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                <span aria-hidden="true" className="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                                </span>
+                                                <span className="relative">
+                                                    ${(myCart.quantity[id] * product_price).toFixed(2)}
+                                                </span>
                                             </span>
-                                            <span className="relative">
-                                                $400
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                ) : <tr><td>There are no products added on your cart yet...</td></tr>}
                             </tbody>
                         </table>
-                        <div className="px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between">
-                            <div className="flex items-center">
-                                <button type="button" className="w-full p-4 border text-base rounded-l-xl text-gray-600 bg-white hover:bg-gray-100">
-                                    <LeftArrow/>
-                                </button>
-                                <button type="button" className="activePageTable">
-                                    1
-                                </button>
-                                <button type="button" className="unactivePageTable">
-                                    2
-                                </button>
-                                <button type="button" className="unactivePageTable">
-                                    3
-                                </button>
-                                <button type="button" className="extremePageTable">
-                                    4
-                                </button>
-                                <button type="button" className="w-full p-4 border-t border-b border-r text-base  rounded-r-xl text-gray-600 bg-white hover:bg-gray-100">
-                                    <RightArrow/>
-                                </button>
-                            </div>
-                        </div>
+                        {myCart.products.length > 10 ? 
+                            <div className="px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between">
+                                <div className="flex items-center">
+                                    <button type="button" className="w-full p-4 border text-base rounded-l-xl text-gray-600 bg-white hover:bg-gray-100">
+                                        <LeftArrow/>
+                                    </button>
+                                    <button type="button" className="activePageTable">
+                                        1
+                                    </button>
+                                    <button type="button" className="unactivePageTable">
+                                        2
+                                    </button>
+                                    <button type="button" className="unactivePageTable">
+                                        3
+                                    </button>
+                                    <button type="button" className="extremePageTable">
+                                        4
+                                    </button>
+                                    <button type="button" className="w-full p-4 border-t border-b border-r text-base  rounded-r-xl text-gray-600 bg-white hover:bg-gray-100">
+                                        <RightArrow/>
+                                    </button>
+                                </div>
+                            </div> : null
+                        }
                     </div>
                 </div>
             </div>

@@ -1,7 +1,9 @@
-import FormSection from "./FormSection";
+import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { placeOrder } from "../actions";
+import Axios from 'axios';
 
 const PlaceOrderForm = () => {
-    
   //Data to be asked on the form
   const dataToAsk = [
     {
@@ -26,8 +28,43 @@ const PlaceOrderForm = () => {
     },
   ];
 
+  const myCart = useSelector(state => state.myCart)
+  const dispatch = useDispatch()
+
+  const [formData, setFormData] = useState({
+    clientName: "",
+    clientID: Number(),
+    clientAddress: "",
+    clientPhone: Number(),
+    clientEmail: "",
+  });
+
+  const handleChange = ( {name, value} ) => {
+    setFormData({
+      ...formData,
+      [name]: value
+    })
+  }
+
+  const handleSubmit = (event) => {
+    let packageToSend = {...formData, total: myCart.total}
+    event.preventDefault();
+    Axios.post('http://localhost:3001/api/order', packageToSend)
+      .then(() => {
+        alert('The order was succesfully made!')
+        dispatch(placeOrder())
+        setFormData({
+          clientName: "",
+          clientID: Number(),
+          clientAddress: "",
+          clientPhone: Number(),
+          clientEmail: "",
+        })
+    })
+  };
+
   return (
-    <form className="formStyle" onSubmit={(e) => e.preventDefault()}>
+    <form className="formStyle" onSubmit={(event) => handleSubmit(event)}>
       <div className="p-4 bg-gray-100 border-t-2 border-yellow-500 rounded-lg bg-opacity-5">
         <div className="max-w-sm mx-auto md:w-full md:mx-0">
           <div className="inline-flex items-center space-x-4">
@@ -39,9 +76,89 @@ const PlaceOrderForm = () => {
       </div>
       <div className="space-y-6 bg-white">
         <hr />
-        {dataToAsk.map(({ label, type }, id) => (
-          <FormSection key={id} label={label} type={type} />
-        ))}
+        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+          <h2 className="max-w-sm mx-auto md:w-1/3">{dataToAsk[0].label}</h2>
+          <div className="max-w-sm mx-auto md:w-2/3">
+            <div className=" relative ">
+              <input
+                name='clientName'
+                type={dataToAsk[0].type}
+                className="formInput"
+                placeholder={dataToAsk[0].label}
+                onChange={({target}) => handleChange(target)}
+                value={formData.clientName}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+          <h2 className="max-w-sm mx-auto md:w-1/3">{dataToAsk[1].label}</h2>
+          <div className="max-w-sm mx-auto md:w-2/3">
+            <div className=" relative ">
+              <input
+                name='clientID'
+                type={dataToAsk[1].type}
+                className="formInput"
+                placeholder={dataToAsk[1].label}
+                onChange={({target}) => handleChange(target)}
+                value={formData.clientID}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+          <h2 className="max-w-sm mx-auto md:w-1/3">{dataToAsk[2].label}</h2>
+          <div className="max-w-sm mx-auto md:w-2/3">
+            <div className=" relative ">
+              <input
+                name='clientAddress'
+                type={dataToAsk[2].type}
+                className="formInput"
+                placeholder={dataToAsk[2].label}
+                onChange={({target}) => handleChange(target)}
+                value={formData.clientAddress}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+          <h2 className="max-w-sm mx-auto md:w-1/3">{dataToAsk[3].label}</h2>
+          <div className="max-w-sm mx-auto md:w-2/3">
+            <div className=" relative ">
+              <input
+                name='clientPhone'
+                type={dataToAsk[3].type}
+                className="formInput"
+                placeholder={dataToAsk[3].label}
+                onChange={({target}) => handleChange(target)}
+                value={formData.clientPhone}
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+          <h2 className="max-w-sm mx-auto md:w-1/3">{dataToAsk[4].label}</h2>
+          <div className="max-w-sm mx-auto md:w-2/3">
+            <div className=" relative ">
+              <input
+                name='clientEmail'
+                type={dataToAsk[4].type}
+                className="formInput"
+                placeholder={dataToAsk[4].label}
+                onChange={({target}) => handleChange(target)}
+                value={formData.clientEmail}
+                required
+              />
+            </div>
+          </div>
+        </div>
         <hr />
         <div className="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
           <button type="submit" className="blueBtn">
