@@ -15,17 +15,11 @@ const Cards = () => {
     
     
     useEffect(() => {
-        
-        const fetchArticles = () => {
-            Axios.get(`${process.env.REACT_APP_HOSTING_URL}/api/products`)
-                .then(({data}) => {
-                    setLoading(false);
-                    dispatch(addProductsList(data))
-                })
-        }
-
-        fetchArticles()
-
+        Axios.get(`${process.env.REACT_APP_HOSTING_URL}/api/products`)
+            .then(({data}) => {
+                setLoading(false);
+                dispatch(addProductsList(data))
+            })
     }, [dispatch])
 
     return (

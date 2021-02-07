@@ -29,7 +29,7 @@ const MyCart = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {myCart.products.length ? myCart.products.map( ({product_name, product_category, product_price}, id) => 
+                                {myCart.products.length ? myCart.products.map( ( {id, product_name, product_category, product_price, quantity} ) => 
                                     <tr key={id}>
                                         <td className="tableData">
                                             <p>
@@ -48,7 +48,7 @@ const MyCart = () => {
                                         </td>
                                         <td className="tableData">
                                             <p>
-                                                {myCart.quantity[id]}
+                                                {quantity}
                                             </p>
                                         </td>
                                         <td className='w-5'>
@@ -61,7 +61,7 @@ const MyCart = () => {
                                                 <span aria-hidden="true" className="absolute inset-0 bg-green-200 opacity-50 rounded-full">
                                                 </span>
                                                 <span className="relative">
-                                                    ${(myCart.quantity[id] * product_price).toFixed(2)}
+                                                    ${(quantity * product_price).toFixed(2)}
                                                 </span>
                                             </span>
                                         </td>

@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, decrementQuantity, incrementQuantity } from "../actions";
+import { addProduct, decrementQuantity, incrementQuantity, removeProduct } from "../actions";
 
 const Card = ({product}) => {
 
     let {id, product_name, product_description, product_image, product_category, product_price} = product;
-
+    
     const myCart = useSelector(state => state.myCart)
     const dispatch = useDispatch();
-
+    
     const handleClick = () => {
-        if(myCart.products.filter(product => product.id === id).length) {
-            dispatch(incrementQuantity(id - 1))
-        } else {
-            dispatch(addProduct(product))
-        }
+        dispatch(addProduct(product))
+    }
+
+    const handleDecrement = () => {
+        myCart.products.find(product => product.id === id).quantity > 1 ? dispatch(decrementQuantity(id)) : dispatch(removeProduct(id))
     }
 
     return (
@@ -38,16 +38,16 @@ const Card = ({product}) => {
                     <h1 className="text-gray-700 font-bold text-xl">
                         ${product_price}
                     </h1>
-                    {!myCart.quantity[id - 1] ? 
+                    {!myCart.products.filter(product => product.id === id).length ? 
                         <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleClick()}>
                             Add to Card
                         </button>
                         : <>
-                            <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => dispatch(decrementQuantity(id - 1))}>
+                            <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleDecrement()}>
                                 -
                             </button>
-                            <p>{myCart.quantity[id - 1]}</p>
-                            <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => dispatch(incrementQuantity(id - 1))}>
+                            <p>{myCart.products.find(product => product.id === id).quantity}</p>
+                            <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => dispatch(incrementQuantity(id))}>
                                 +
                             </button>
                         </>
