@@ -17,7 +17,7 @@ const Cards = () => {
     useEffect(() => {
         
         const fetchArticles = () => {
-            Axios.get('http://localhost:3001/api/products')
+            Axios.get(`${process.env.REACT_APP_HOSTING_URL}/api/products`)
                 .then(({data}) => {
                     setLoading(false);
                     dispatch(addProductsList(data))
@@ -30,7 +30,7 @@ const Cards = () => {
 
     return (
         <div className='cardsContainer'>
-            {/* Remove the cards and import them from the server API */}
+            
             {loading ? <h1>Loading</h1> : productsList.map(product => (
                 <Card key={product.id} product={product}/>
             ))} 

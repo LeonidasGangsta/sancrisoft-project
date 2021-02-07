@@ -33,9 +33,9 @@ const PlaceOrderForm = () => {
 
   const [formData, setFormData] = useState({
     clientName: "",
-    clientID: Number(),
+    clientID: "",
     clientAddress: "",
-    clientPhone: Number(),
+    clientPhone: "",
     clientEmail: "",
   });
 
@@ -49,15 +49,15 @@ const PlaceOrderForm = () => {
   const handleSubmit = (event) => {
     let packageToSend = {...formData, total: myCart.total}
     event.preventDefault();
-    Axios.post('http://localhost:3001/api/order', packageToSend)
+    Axios.post(`${process.env.REACT_APP_HOSTING_URL}/api/order`, packageToSend)
       .then(() => {
         alert('The order was succesfully made!')
         dispatch(placeOrder())
         setFormData({
           clientName: "",
-          clientID: Number(),
+          clientID: "",
           clientAddress: "",
-          clientPhone: Number(),
+          clientPhone: "",
           clientEmail: "",
         })
     })

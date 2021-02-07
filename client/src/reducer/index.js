@@ -53,7 +53,7 @@ const reducer = (state = initialState, { type, payload }) => {
             ...state,
             myCart: {
                 ...state.myCart,
-                quantity: state.myCart.quantity.map( (value, index) => index === payload ? value + 1: value),
+                quantity: state.myCart.quantity.map( (value, index) => index === payload ? value - 1: value),
                 total: state.myCart.total - state.myCart.products[payload].product_price
             }
         }

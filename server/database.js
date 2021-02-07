@@ -17,6 +17,8 @@ router.post('/order', (req, res) => {
 
     const sqlInsert = "INSERT INTO orders_fulfilled (client_name, client_ID, client_address, client_phone, client_email, order_total) VALUES (?,?,?,?,?,?)"
     db.query(sqlInsert, [clientName, clientID, clientAddress, clientPhone, clientEmail, total], (error, resolve) => {
+        if(error) res.status(400).send(error);
+        res.send('Order submitted!')
     })
 })
 
