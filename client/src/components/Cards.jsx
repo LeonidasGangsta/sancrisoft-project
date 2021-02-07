@@ -15,7 +15,7 @@ const Cards = () => {
     
     
     useEffect(() => {
-        Axios.get(`${process.env.REACT_APP_HOSTING_URL}/api/products`)
+        Axios.get(`${process.env.REACT_APP_SERVER_URL}/api/products`)
             .then(({data}) => {
                 setLoading(false);
                 dispatch(addProductsList(data))

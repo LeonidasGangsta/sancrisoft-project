@@ -49,9 +49,9 @@ const PlaceOrderForm = () => {
   const handleSubmit = (event) => {
     let packageToSend = {...formData, total: myCart.total}
     event.preventDefault();
-    Axios.post(`${process.env.REACT_APP_HOSTING_URL}/api/order`, packageToSend)
+    Axios.post(`${process.env.REACT_APP_SERVER_URL}/api/order`, packageToSend)
       .then(() => {
-        alert('The order was succesfully made!')
+        let name = formData.clientName;
         dispatch(placeOrder())
         setFormData({
           clientName: "",
@@ -60,7 +60,8 @@ const PlaceOrderForm = () => {
           clientPhone: "",
           clientEmail: "",
         })
-    })
+        window.location.href = `${process.env.REACT_APP_CLIENT_URL}/thanks/${name}`
+      })
   };
 
   return (
