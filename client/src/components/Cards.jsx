@@ -10,7 +10,7 @@ const Cards = () => {
 
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5)
+    const [postsPerPage] = useState(20)
     const productsList = useSelector(state => state.productsList)
     const dispatch = useDispatch()
     
