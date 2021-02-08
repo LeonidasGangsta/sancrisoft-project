@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteIcon, LeftArrow, RightArrow } from "../Icons/Icons";
+import { DeleteIcon } from "../Icons/Icons";
 import { decrementQuantity, incrementQuantity, removeProduct } from "../actions";
 
 const MyCart = () => {
@@ -107,30 +107,6 @@ const MyCart = () => {
                                 </tr>
                             </tfoot>
                         </table>
-                        {myCart.products.length > 10 ? 
-                            <div className="px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between">
-                                <div className="flex items-center">
-                                    <button type="button" className="w-full p-4 border text-base rounded-l-xl text-gray-600 bg-white hover:bg-gray-100">
-                                        <LeftArrow/>
-                                    </button>
-                                    <button type="button" className="activePageTable">
-                                        1
-                                    </button>
-                                    <button type="button" className="unactivePageTable">
-                                        2
-                                    </button>
-                                    <button type="button" className="unactivePageTable">
-                                        3
-                                    </button>
-                                    <button type="button" className="extremePageTable">
-                                        4
-                                    </button>
-                                    <button type="button" className="w-full p-4 border-t border-b border-r text-base  rounded-r-xl text-gray-600 bg-white hover:bg-gray-100">
-                                        <RightArrow/>
-                                    </button>
-                                </div>
-                            </div> : null
-                        }
                     </div>
                 </div>
             </div>
