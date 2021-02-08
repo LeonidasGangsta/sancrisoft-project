@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon, LeftArrow, RightArrow } from "../Icons/Icons";
-import { removeProduct } from "../actions";
+import { decrementQuantity, incrementQuantity, removeProduct } from "../actions";
 
 const MyCart = () => {
 
@@ -9,6 +9,10 @@ const MyCart = () => {
 
     const removeHandler = (id) => {
         dispatch(removeProduct(id))
+    }
+
+    const decrementHandler = (id) => {
+        dispatch(decrementQuantity(id))
     }
 
     const columnsHeaders = ['Products', 'Category', 'Unit Price', 'Quantity', '', 'Total'];
@@ -47,11 +51,25 @@ const MyCart = () => {
                                             </p>
                                         </td>
                                         <td className="tableData">
-                                            <p>
-                                                {quantity}
-                                            </p>
+                                            <div className='flex justify-around'>
+                                                <button
+                                                className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
+                                                onClick={quantity !== 1 ? () => decrementHandler(id) : () => removeHandler(id)}
+                                                >
+                                                    -
+                                                </button>
+                                                <p>
+                                                    {quantity}
+                                                </p>
+                                                <button
+                                                className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
+                                                onClick={() => dispatch(incrementQuantity(id))}
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
                                         </td>
-                                        <td className='w-5'>
+                                        <td className='tableData'>
                                             <button onClick={() => removeHandler(id)}>
                                                 <DeleteIcon classNameProp='h-5 w-5'/>
                                             </button>
@@ -68,6 +86,26 @@ const MyCart = () => {
                                     </tr>
                                 ) : <tr><td>There are no products added on your cart yet...</td></tr>}
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td className='tableData font-bold'>
+                                        <p>Total: </p>
+                                    </td>
+                                    <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                        <span className='relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+                                            <span aria-hidden="true" className="absolute inset-0 bg-green-200 opacity-50 rounded-full">
+                                            </span>
+                                            <span className='relative'>
+                                                ${myCart.total.toFixed(2)}
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                         {myCart.products.length > 10 ? 
                             <div className="px-5 bg-white py-5 flex flex-col xs:flex-row items-center xs:justify-between">

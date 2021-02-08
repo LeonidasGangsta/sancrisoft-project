@@ -22,7 +22,7 @@ const myCartReducer = (state = initialState, { type, payload }) => {
             const productToRemove = state.products.find(product => product.id === payload)
             const subtotal = productToRemove.quantity * productToRemove.product_price
             return {
-                total: subtotal,
+                total: state.total - subtotal,
                 products: state.products.filter(product => product.id !== payload),
             }
     
@@ -34,12 +34,13 @@ const myCartReducer = (state = initialState, { type, payload }) => {
             }
         
         case 'DECREMENT_QUANTITY':
+            const productPrice = state.products.find(product => product.id === payload).product_price;
             //Payload: ID of the product
             return {
                 products: state.products.map(product => {
                     return product.id === payload ? {...product, quantity: product.quantity - 1} : product
                 }),
-                total: state.total - state.products.find(product => product.id === payload).product_price
+                total: state.total - productPrice
             }
     
         case 'EMPTY_CART':
