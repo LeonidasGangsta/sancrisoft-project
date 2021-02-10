@@ -35,7 +35,7 @@ El script se encargara de crear la base de datos, su estructura e insertara los 
 Primero deberas forkear este repositorio y clonarlo en tu maquina de manera local.
 
 ~~~
-git clone
+git clone https://github.com/LeonidasGangsta/sancrisoft-project.git
 cd .\sancrisoft-project\
 ~~~
 
