@@ -26,7 +26,7 @@ export const decrementQuantity = ( id ) => {
     }
 }
 
-export const placeOrder = () => {
+export const emptyCart = () => {
     return {
         type: 'EMPTY_CART',
     }

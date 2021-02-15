@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { placeOrder } from "../actions";
+import { emptyCart } from "../actions";
 import Axios from 'axios';
 
 const PlaceOrderForm = () => {
@@ -52,7 +52,7 @@ const PlaceOrderForm = () => {
     Axios.post(`${process.env.REACT_APP_SERVER_URL}/api/order`, packageToSend)
       .then(() => {
         let name = formData.clientName;
-        dispatch(placeOrder())
+        dispatch(emptyCart())
         setFormData({
           clientName: "",
           clientID: "",

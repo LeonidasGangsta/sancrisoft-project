@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon } from "../Icons/Icons";
-import { decrementQuantity, incrementQuantity, removeProduct } from "../actions";
+import { decrementQuantity, incrementQuantity, removeProduct, emptyCart } from "../actions";
 
 const MyCart = () => {
 
@@ -11,21 +11,20 @@ const MyCart = () => {
         dispatch(removeProduct(id))
     }
 
-    const decrementHandler = (id) => {
-        dispatch(decrementQuantity(id))
-    }
-
     const columnsHeaders = ['Products', 'Category', 'Unit Price', 'Quantity', '', 'Total'];
 
     return (
         <div className="myCartContainer">
             <div className="py-8">
+                <div className='flex'>
+                    <button className='clearCartBtn' onClick={() => dispatch(emptyCart())}>Clear cart</button>
+                </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                         <table className="tableStyle">
                             <thead>
                                 <tr>
-                                    {columnsHeaders.map( (header, id) => 
+                                    {columnsHeaders.map((header, id) =>
                                         <th key={id} scope="col" className="tableHeader">
                                             {header}
                                         </th>
@@ -33,7 +32,7 @@ const MyCart = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {myCart.products.length ? myCart.products.map( ( {id, product_name, product_category, product_price, quantity} ) => 
+                                {myCart.products.length ? myCart.products.map(({ id, product_name, product_category, product_price, quantity }) =>
                                     <tr key={id}>
                                         <td className="tableData">
                                             <p>
@@ -53,8 +52,8 @@ const MyCart = () => {
                                         <td className="tableData">
                                             <div className='flex justify-around'>
                                                 <button
-                                                className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
-                                                onClick={quantity !== 1 ? () => decrementHandler(id) : () => removeHandler(id)}
+                                                    className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
+                                                    onClick={quantity !== 1 ? () => dispatch(decrementQuantity(id)) : () => removeHandler(id)}
                                                 >
                                                     -
                                                 </button>
@@ -62,8 +61,8 @@ const MyCart = () => {
                                                     {quantity}
                                                 </p>
                                                 <button
-                                                className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
-                                                onClick={() => dispatch(incrementQuantity(id))}
+                                                    className='shadow px-1 rounded-lg w-5 bg-blue-500 font-bold text-white hover:bg-blue-600'
+                                                    onClick={() => dispatch(incrementQuantity(id))}
                                                 >
                                                     +
                                                 </button>
@@ -71,7 +70,7 @@ const MyCart = () => {
                                         </td>
                                         <td className='tableData'>
                                             <button onClick={() => removeHandler(id)}>
-                                                <DeleteIcon classNameProp='h-5 w-5'/>
+                                                <DeleteIcon classNameProp='h-5 w-5' />
                                             </button>
                                         </td>
                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -88,10 +87,10 @@ const MyCart = () => {
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td/>
-                                    <td/>
-                                    <td/>
-                                    <td/>
+                                    <td />
+                                    <td />
+                                    <td />
+                                    <td />
                                     <td className='tableData font-bold'>
                                         <p>Total: </p>
                                     </td>
